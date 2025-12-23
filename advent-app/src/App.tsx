@@ -7,21 +7,21 @@ function App() {
   const [secret, setSecret] = useState<string>('')
   const [solved, setSolved] = useState<number>(0)
 
-  // Ala
+  // Ala b1sagksz8gkdmpr4lst6a9pb
   const secretAla = 'b1sag'+'ksz8g'+'kdmpr'+'4lst6'+'a9pb'
 
-  // Miko
-  const secretMiko = 'l2sag'+'asz2g'+'?kfsm'+'4bym6'+'k6tc'
+  // Miko l2sagasz2gokfsm4bym6k6tc
+  const secretMiko = 'l2sag'+'asz2g'+'okfsm'+'4bym6'+'k6tc'
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
-    const kodParam = params.get('kod') || ''
+    const kodParam = params.get('kod')?.toLowerCase() || ''
     setKod(kodParam)
 
     let matchesAla = 0
     let matchesMiko = 0
-    let matches = 0
-    let secret = ''
+    let matches
+    let secret
 
     let maxLength = Math.min(kodParam.length, secretAla.length)
     for (let i = 0; i < maxLength; i++) {
@@ -34,7 +34,7 @@ function App() {
 
     maxLength = Math.min(kodParam.length, secretMiko.length)
     for (let i = 0; i < maxLength; i++) {
-      if (kodParam[i] === secretMiko[i]) {
+      if (kodParam[i] === secretMiko[i] ) {
         matchesMiko++
       } else {
         break;
@@ -61,6 +61,16 @@ function App() {
   return (
     <div className="app-container">
       <h1>Secret Code Matcher</h1>
+      {solved === 1 && (
+        <div className="winner-banner">
+          Brawo Ala! Skarb jest pod szafką, pod biurkiem taty.
+        </div>
+      )}
+      {solved === 2 && (
+        <div className="winner-banner">
+          Brawo Mikołaju! Skarb jest w drukarce.
+        </div>
+      )}
       <div className="info-box">
         <p><strong>Your code:</strong> {kod || '(no code provided)'}</p>
         <p><strong>Secret length:</strong> {secret.length} characters</p>
